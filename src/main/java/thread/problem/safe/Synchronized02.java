@@ -1,6 +1,6 @@
-package day02_thread_problem.safe;
+package thread.problem.safe;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * synchronized原理
@@ -54,7 +54,9 @@ import org.junit.Test;
         }
  * 重量级琐
  */
-public class Sequence2 {
+public class Synchronized02 {
+
+    private static int value;
 
     /**
      * synchronized 修饰实例方法，作用于当前实例加锁，进入同步代码前要获得当前实例的锁
@@ -73,78 +75,32 @@ public class Sequence2 {
     }
 
     /**
-     * 虽然我们使用synchronized修饰了increase方法，但却new了两个不同的实例对象，这也就意味着存在着两个不同的实例对象锁，
+     * 虽然我们使用synchronized修饰了getNext方法，但却new了两个不同的实例对象，这也就意味着存在着两个不同的实例对象锁，
      * 因此t1和t2都会进入各自的对象锁，也就是说t1和t2线程使用的是不同的锁，因此线程安全是无法保证的。
      *      解决:
-     *          这种困境的的方式是将synchronized作用于静态的getNext方法，这样的话，对象锁就当前类对象，由于无论创建多少个实例对象，
-     *          但对于的类对象拥有只有一个，所有在这样的情况下对象锁就是唯一的。
+     *          这种困境的的方式是将synchronized作用于静态的getNext方法，这样的话，对象锁就当前类对象
+     *          所以无论创建多少个实例对象，但对于的类对象拥有只有一个，所有在这样的情况下对象锁就是唯一的。
      */
-    @Test
-    public void demo01(){
-        //新实例
-        makeThread(new Sequence2());
-        //新实例
-        makeThread(new Sequence2());
-    }
-
-    /**
-     * synchronized 修饰静态方法，作用于当前类对象加锁，进入同步代码前要获得当前类对象的锁
-     * Sequence2.class
-     * 由于静态成员不专属于任何一个实例对象，是类成员，因此通过class对象锁可以控制静态 成员的并发操作。
-     * 需要注意的是如果一个线程A调用一个实例对象的非static synchronized方法，而线程B需要调用这个实例对象所属类的静态 synchronized方法，是允许的，不会发生互斥现象，
-     * 因为访问静态 synchronized 方法占用的锁是当前类的class对象，而访问非静态 synchronized 方法占用的锁是当前实例对象锁
-     * @return
-     */
-    public static synchronized int getPrevious(){
-        return value--;
-    }
-
-    /**
-     * 指定加锁对象，对给定对象加锁，进入同步代码库前要获得给定对象的锁。
-     * 将synchronized作用于一个给定的实例对象instance，即当前实例对象就是锁对象，每次当线程进入synchronized包裹的代码块时就会要求当前线程持有instance实例对象锁，
-     * 如果当前有其他线程正持有该对象锁，那么新到的线程就必须等待，这样也就保证了每次只有一个线程执行i++;操作。
-     * 当然除了instance作为对象外，我们还可以使用this对象(代表当前实例)或者当前类的class对象作为锁
-     * @return
-     */
-    public int xx(){
-        /**
-         * Java 虚拟机中的同步(Synchronization)基于进入和退出管程(Monitor)对象实现， 无论是显式同步(有明确的 monitorenter 和 monitorexit 指令,即同步代码块)还是隐式同步都是如此。
-         * 在 Java 语言中，同步用的最多的地方可能是被 synchronized 修饰的同步方法。
-         * 同步方法 并不是由 monitorenter 和 monitorexit 指令来实现同步的，而是由方法调用指令读取运行时常量池中方法的 ACC_SYNCHRONIZED 标志来隐式实现的
-         */
-        // monitorenter
-        synchronized (this) {
-            if (value > 0) {
-                return value;
-            } else {
-                return -1;
-            }
-        }
-        // monitorexit
-    }
-
-    private static int value;
-
     public static void main(String[] args) {
-        Sequence2 sequence = new Sequence2();
 
-        makeThread(sequence);
+        Synchronized02 sequence01 = new Synchronized02();
+        Synchronized02 sequence02 = new Synchronized02();
 
-        makeThread(sequence);
+        makeThread(sequence01);
+
+        makeThread(sequence01);
+        makeThread(sequence02);
 
     }
 
-    private static void makeThread(Sequence2 sequence) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    System.out.println(Thread.currentThread().getName() + " " + sequence.getNext());
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+    private static void makeThread(Synchronized02 sequence) {
+        new Thread(() -> {
+            while (true) {
+                System.out.println(Thread.currentThread().getName() + " " + sequence.getNext());
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();

@@ -1,10 +1,10 @@
-package day02_thread_problem.safe;
+package thread.problem.safe;
 
 /**
  * 多线程共享资源
  * 对资源进行非原子性操作(对应字节码中非一条运行就结束的操作)
  */
-public class Sequence {
+public class Synchronized01 {
 
     public synchronized int getNext(){
         /**
@@ -20,7 +20,7 @@ public class Sequence {
     private int value;
 
     public static void main(String[] args) {
-        Sequence sequence = new Sequence();
+        Synchronized01 sequence = new Synchronized01();
 //        /**
 //        * 单线程无线程安全问题,顺序增加
 //        */
@@ -34,7 +34,7 @@ public class Sequence {
 
     }
 
-    private static void makeThread(Sequence sequence) {
+    private static void makeThread(Synchronized01 sequence) {
         new Thread(new Runnable() {
             @Override
             public void run() {

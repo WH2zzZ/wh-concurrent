@@ -1,10 +1,10 @@
-package day01_thread_status;
+package thread.status.wait;
 
-import day01_thread_status.thread.ThreadOne;
-import day01_thread_status.thread.ThreadTwo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import thread.status.model.ThreadOne;
+import thread.status.model.ThreadTwo;
 
-public class ThreadStatus {
+public class ThreadWaitStatus {
 
     private final ThreadOne threadOne = new ThreadOne();
     private final ThreadTwo threadTwo = new ThreadTwo();

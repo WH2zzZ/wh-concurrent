@@ -1,16 +1,13 @@
-package day02_thread_problem.live;
+package thread.problem.live;
 
 
 /**
  * 高优先级吞噬所有低优先级的CPU时间片
- * 线程被永久堵塞在一个等待进入同步块的状态
- * 等待的线程永远不被唤醒
  *
  * 如何避免:
  *    设置合理的优先级
- *    使用琐代替synchronized, 来保证线程不会被永久的堵塞在一个等待进入的同步块
  */
-public class HungerDemo {
+public class Hunger01 {
 
     public static void main(String[] args) {
 
@@ -32,5 +29,14 @@ public class HungerDemo {
         thread3.start();
         thread4.start();
 
+    }
+
+    public static class Target implements Runnable {
+        @Override
+        public void run() {
+            while (true) {
+                System.out.println(Thread.currentThread().getName() + "  run ...");
+            }
+        }
     }
 }

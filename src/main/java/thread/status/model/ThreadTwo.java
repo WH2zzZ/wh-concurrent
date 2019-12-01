@@ -1,4 +1,4 @@
-package day01_thread_status.thread;
+package thread.status.model;
 
 public class ThreadTwo implements Runnable {
 

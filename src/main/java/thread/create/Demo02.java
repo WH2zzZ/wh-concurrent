@@ -1,6 +1,7 @@
-package day01_thread;
+package thread.create;
 
 /**
+ * 无返回值
  * 这种方式创建的线程其实创建的是一个线程任务,并非一个线程
  */
 public class Demo02 implements Runnable{

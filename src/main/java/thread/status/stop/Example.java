@@ -1,7 +1,6 @@
-package day01_thread_stop;
+package thread.status.stop;
 
-import day01_thread.Demo01;
-import org.junit.Test;
+import thread.create.Demo01;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package day01_thread_stop;
+package thread.status.stop;
 
 import java.io.IOException;
 import java.net.ServerSocket;

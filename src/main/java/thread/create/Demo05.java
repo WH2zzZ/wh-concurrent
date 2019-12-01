@@ -1,4 +1,4 @@
-package day01_thread;
+package thread.create;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,6 +12,7 @@ public class Demo05 {
 
         Timer timer = new Timer();
 
+        //每隔1s执行一次
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
