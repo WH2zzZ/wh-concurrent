@@ -1,4 +1,4 @@
-package day03_singleton;
+package thread.singleton;
 
 import org.junit.jupiter.api.Test;
 

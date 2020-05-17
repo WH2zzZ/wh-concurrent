@@ -1,5 +1,6 @@
 package thread.create;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.Date;
 /**
  * 继承thread 跑一个线程，无返回值
  */
+@Slf4j
 public class Demo01 extends Thread {
 
     /**
@@ -21,17 +23,16 @@ public class Demo01 extends Thread {
     public void run() {
         //不中断就去执行
         while (!isInterrupted()) {
-            System.out.println("开始执行：" + new Date());
+            log.info("开始执行：{}", new Date());
         }
         //一但发现终端，看中断的线程是否可以sleep,然后结束
         try {
             //如果出错，说明线程被终端了，所以当前线程是不可以sleep的
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            System.out.println("线程被终止了");
+            log.info("线程被终止了");
         }
-
-        System.out.println("结束执行：" + new Date());
+        log.info("结束执行:{}", new Date());
     }
 
     @Test

@@ -35,9 +35,11 @@ public class Demo04 implements Callable<Integer> {
 
         //等待1s钟获取结果，如果结果还没有返回，报timeout异常
         try {
-            Integer result = task.get(1, TimeUnit.SECONDS);
+            //此处会阻塞
+            Integer result = task.get();
+//            Integer result = task.get(1, TimeUnit.SECONDS);
             System.out.println("等了一秒然后计算的结果" + result);
-        } catch (TimeoutException | InterruptedException | ExecutionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

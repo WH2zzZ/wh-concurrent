@@ -1,6 +1,4 @@
-package thread.problem.safe;
-
-import org.junit.jupiter.api.Test;
+package thread.problem.safe.synchronizeds;
 
 /**
  * synchronized原理
@@ -14,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * 偏向琐
  *      在大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，因此为了减少同一线程获取锁(会涉及到一些CAS操作,耗时)的代价而引入偏向锁。
  *      偏向锁的核心思想是，如果一个线程获得了锁，那么锁就进入偏向模式，此时Mark Word 的结构也变为偏向锁结构，
- *      当这个线程再次请求锁时，无需再做任何同步操作，即获取锁的过程，这样就省去了大量有关锁申请的操作，从而也就提供程序的性能。
+ *      当这个线程再次请求锁时，无需再做任何同步操作，即获取锁的过程，这样就省去了大量有关锁申请的操作，从而也就提高程序的性能。
  *      所以，对于没有锁竞争的场合，偏向锁有很好的优化效果，毕竟极有可能连续多次是同一个线程申请相同的锁。
  *      但是对于锁竞争比较激烈的场合，偏向锁就失效了，因为这样场合极有可能每次申请锁的线程都是不相同的，因此这种场合下不应该使用偏向锁，否则会得不偿失，
  *      需要注意的是，偏向锁失败后，并不会立即膨胀为重量级锁，而是先升级为轻量级锁。
@@ -53,6 +51,13 @@ import org.junit.jupiter.api.Test;
             }
         }
  * 重量级琐
+ */
+/**
+ * Synchronized修饰实例方法
+ * @Author WangHan
+ * @Create 5:01 下午 2019/12/1
+ * @Param
+ * @Return
  */
 public class Synchronized02 {
 

@@ -1,4 +1,4 @@
-package day03_singleton;
+package thread.singleton;
 
 /**
  * 静态内部类[推荐用]

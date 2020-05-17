@@ -1,4 +1,4 @@
-package thread.problem.safe;
+package thread.problem.safe.synchronizeds;
 
 /**
  * 多线程共享资源
@@ -21,6 +21,7 @@ public class Synchronized01 {
 
     public static void main(String[] args) {
         Synchronized01 sequence = new Synchronized01();
+        Synchronized01 sequence2 = new Synchronized01();
 //        /**
 //        * 单线程无线程安全问题,顺序增加
 //        */
@@ -30,21 +31,18 @@ public class Synchronized01 {
 
         makeThread(sequence);
 
-        makeThread(sequence);
+        makeThread(sequence2);
 
     }
 
     private static void makeThread(Synchronized01 sequence) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    System.out.println(Thread.currentThread().getName() + " " + sequence.getNext());
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        new Thread(() -> {
+            while (true) {
+                System.out.println(Thread.currentThread().getName() + " " + sequence.getNext());
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
