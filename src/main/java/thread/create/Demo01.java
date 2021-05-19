@@ -30,6 +30,7 @@ public class Demo01 extends Thread {
             //如果出错，说明线程被终端了，所以当前线程是不可以sleep的
             Thread.sleep(1000);
         } catch (InterruptedException e) {
+            e.printStackTrace();
             log.info("线程被终止了");
         }
         log.info("结束执行:{}", new Date());

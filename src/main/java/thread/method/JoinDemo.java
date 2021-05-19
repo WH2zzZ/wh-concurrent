@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class JoinDemo {
 
-    private int r = 1;
+    private boolean flag = false;
 
     @Test
     public void testJoin(){
@@ -21,7 +21,7 @@ public class JoinDemo {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            r = 10;
+            flag = true;
             log.info("{} end ..", Thread.currentThread());
         }, "t1");
         t1.start();
@@ -29,11 +29,11 @@ public class JoinDemo {
         try {
             //等待t1线程执行完成，当前线程才会再执行
 //            t1.join();
-            t1.join(1000);
+            t1.join(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        log.info("r = {}", r);
+        log.info("t1线程是否执行完毕 = {}", flag);
     }
 }

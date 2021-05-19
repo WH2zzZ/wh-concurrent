@@ -38,6 +38,7 @@ public class SleepYieldDemo {
             yield();
             log.info("{} run...", currentThread());
         });
+//        log.info("1 name:{} state:{}", thread.getName(), thread.getState());
         thread.start();
         while (thread.getState() != State.TERMINATED){
             log.info("name:{} state:{}", thread.getName(), thread.getState());

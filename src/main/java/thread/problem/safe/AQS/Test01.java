@@ -1,6 +1,7 @@
 package thread.problem.safe.AQS;
 
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -15,10 +16,15 @@ public class Test01 {
 
     AbstractQueuedSynchronizer abstractQueuedSynchronizer;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Lock lock = new ReentrantLock();
         //进入ReentrantLock的lock方法查看具体实现
         lock.lock();
+        lock.lockInterruptibly();
+        Condition condition = lock.newCondition();
+        condition.await();
+        condition.signal();
+        lock.unlock();
     }
 
 }

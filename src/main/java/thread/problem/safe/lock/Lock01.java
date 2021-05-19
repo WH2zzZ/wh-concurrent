@@ -1,6 +1,5 @@
 package thread.problem.safe.lock;
 
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -21,13 +20,15 @@ public class Lock01 {
     /**
      * 所有的线程都要拿一把锁，不能放到next方法里面，这样所有线程都是不同的锁
      */
-    Lock lock = new ReentrantLock();
+    ReentrantLock lock = new ReentrantLock();
 
     public int next(){
         lock.lock();
-        int i = value++;
-        lock.unlock();
-        return i;
+        try {
+            return value++;
+        }finally {
+            lock.unlock();
+        }
     }
 
     public static void main(String[] args) {

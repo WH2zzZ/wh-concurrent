@@ -1,47 +1,29 @@
 package thread.problem.safe.volatiles;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * 轻量级锁
+ * 可见性
  *
  * @Author WangHan
  * @Create 2019/12/2 9:11 下午
  */
+@Slf4j
 public class Volatile01 {
 
-    public static class MyThread extends Thread{
-        private volatile boolean flag = true;
+    volatile static boolean flag = true;
 
-        public void stopThread(){
-            flag = false;
-        }
-
-        @Override
-        public void run() {
-            while (flag){
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(Thread.currentThread().getName() + " run");
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread = new Thread(() -> {
+            while (flag) {
+                //不可有任何代码
             }
-        }
-    }
-    public static void main(String[] args) {
-        MyThread myThread = new MyThread();
+            log.info("Thread:{} end!!!!，flag:{}", Thread.currentThread().getName(), flag);
+        });
 
-        myThread.start();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        myThread.stopThread();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        thread.start();
+        Thread.sleep(1000);
+        log.info("主线程准备停止，flag:{}", flag);
+        flag = false;
     }
 }
